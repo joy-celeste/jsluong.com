@@ -1,0 +1,329 @@
+<title>Readers</title>
+
+<style>
+table tr td a img, .sf {
+	display: none;
+}
+table {
+	background: transparent;
+}
+body {
+	background-image: url("bg.gif");
+	text-align: center;
+}
+#content {
+	padding-left: 21%;
+	padding-right: 10%;
+	text-align: left;
+	height: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: #44b1f7;
+}
+a:hover, a:hover img {
+	text-align: center;
+	cursor: crosshair;
+	color: #191919;
+}
+body, font, div, table {
+	font: 14px arial;
+	color: #3D2E24;
+}
+b {
+	color: #BC4900 !important;
+}
+h2 {
+	display: block;
+	font: 12pt verdana;
+	padding: 5px;
+	background: #1d1d1d;
+	text-transform: uppercase !important;
+	color: #fff !important;
+	font-size: 12pt !important;
+}
+h1 {
+	background: #BC4900;
+	padding: 2px;
+	font-size: 12pt;
+	line-height: 25px;
+	height: 50px;
+	width: 100px;
+	float: right;
+	margin-right: -50px;
+	color: #fff;
+}
+#bubble {
+	padding: 10px;
+	background: #FFF;
+	width: auto;
+	height: auto;
+	border: 3px solid #fff;
+}
+
+#text {
+	width: 180px;
+	height: 220px;
+	top: 0px;
+	left: 40px;
+	text-align: left;
+	color: #fff !important;
+	overflow: hidden;
+}
+#text b {
+	width: 180px;
+	height: 220px;
+	top: 0px;
+	left: 213px;
+	text-align: justify;
+	text-transform: uppercase;
+	color: #BC4900 !important;
+	overflow: hidden;
+	font-size: 12pt !important;
+}
+
+textarea.ba {
+	font-weight: normal;
+	border-width: 1px;
+	border-style: solid;
+	padding: 4px;
+	border-color: #000;
+	text-transform: none;
+	width: 230;
+	height: 50;
+	margin: 5px;
+	overflow: auto;
+</style>
+
+<div id="text" style="position: fixed; z-index: 3; padding: 10px; height: auto; background: #1d1d1d; left: 4%; width: 12%;">
+
+<center><br><b>WELCOME</b><br>
+Here's how I've been making readers.<br><br>
+If you need clarification or have a request, just drop a line to:<br>
+<small><i>jsluong AT berkeley.edu</i></small><br><br>
+<b>Navigation</b><br><p align=left>
+<a href="#about">1. Introduction</a><br>
+<a href="#things">2. Things Needed to Make Readers</a><br>
+<a href="#formatting">3. Formatting Transcripts</a><br>
+<a href="#collecting">4. Collecting Readings</a><br>
+<a href="#overview">5. Create Overview</a><br>
+<a href="#together">6. Putting it All Together in Adobe</a><br>
+<a href="#toc">7. Creating the Table of Contents, Renumbering Pages, Add ToC Image</a><br>
+<a href="#footer">8. Footer</a><br>
+<a href="#compress">9. Compress File</a><br>
+<a href="#versioncontrol">10. Version Control</a><br>
+<a href="#issues">11. Occasional Issues</a><br>
+<a href="#done">12. All done!</a><br>
+</ul>
+
+<br></center>
+</div>
+
+<div id="content" style="width: 69%;">
+
+<br><div id="bubble">
+<h2><a name="about">Introduction</a></h2>
+Hey! So you want to make readers, like <a href="example_reader.pdf" target="_blank">this one (opens in new tab)</a>.<p>
+Readers are made up of four parts: the table of contents, the overview, slides/transcripts, and readings. These parts correspond to the various sections under the table of contents:<p>
+<img src="reader_first_page_faded.jpg"><p>
+
+Generally, reader creation goes like this. Go ahead and click to skip to a particular section:
+<ol type="1">
+<li>Format transcripts <i>and</i> collect readings</li>
+<li>Create the overview</li>
+<li>Put overview, transcripts, readings together in Adobe Reader</li>
+<li>Create table of contents</li>
+<li>Compress file size and upload used resources</li>
+</ol>
+
+Why this order? You need to know what's in the readers (transcripts, readings) to make the overview. To put the reader together, you need the overview/transcripts/readings. And then to create the table of contents, you need to have everything else prepared (how else would you know what the page numbers are going to be?).
+</div>
+
+
+<br><div id="bubble">
+<h2><a name="things">Things Needed to Make Readers</a></h2>
+
+Before getting started, it's important to make sure you have all the materials you need to generate the reader. You will need this information to create the overview anyway, so best have everything here before getting started.
+<ol type="1">
+<li>learning outcomes</li>
+	<ul>
+	<li>to provide on the overview</li>
+	</ul>
+<li>list of readings</li>
+	<ul>
+	<li><u>both required and optional</u>; though I don't typically include the optional readings themselves, I provide links to them in the overview. Also sometimes some readings may not be incuded for you, so you have to go hunt it down on the Internet.</li>
+	</ul>
+<li>the readings themselves</li>
+	<ul>
+	<li>I mean the files--usually provided in .pdfs or Word docs. Occasionally only a site will be provided; see the "Collect Readings" section to see how I deal with this</li>
+	</ul>
+<li>link to lectures themselves</li>
+	<ul>
+	<li>to provide on the overview</li>
+	</ul>
+<li>link to lecture mp3s</li>
+	<ul>
+	<li>to provide on the overview/li>
+	</ul>
+<li>lecture transcripts</li>
+	<ul>
+	<li>The text itself--to create the transcripts and to provide on the overview. Generally you get this in a .txt or a Word doc file.</li>
+	</ul>
+<li>discussion prompts</li>
+	<ul>
+	<li>optional--some courses want to include these; ask whoever gave you this assignment if they want to include them</li>
+	</ul>
+</ol>
+
+As for tools and programs:
+<ol type="1">
+<li><a  href=https://helpx.adobe.com/acrobat/kb/acrobat-downloads.html>Adobe Acrobat XI Pro</a></li>
+	<ul>
+	<li>Required to put readers together. If you're a student, <a href=https://software.berkeley.edu/adobe>Berkeley provides Adobe Acrobat for free here.</a></li>
+	</ul>
+<li><a href=http://www.evermap.com/autobookmark.asp>AutoBookmark Plug-in for Adobe Acrobat</a></li>
+	<ul>
+	<li>Absolutely essential to create the table of contents. <strike>This, ah, does require purchasing or a serial number, so ask the department to buy it for you.</strike></li>
+	<li>Hey! Looks like the serial number can be re-used, nice. Download the plugin <a href=SetupAutoBookmarkStd.exe>here</a>. When prompted, use the name <b>Pamela Adamson</b> and the serial code <b>S52SUA-6857439846</b>.</li>
+	</ul>
+<li>Microsoft Word</li>
+	<ul>
+	<li>Required to make the overview. If you're a student, <a href=https://software.berkeley.edu/microsoft>Berkeley provides MS Office for free here.</a></li>
+	</ul>
+<li>Microsoft PowerPoint</li>
+	<ul>
+	<li>Used to view slides to format transcripts. If you're a student, <a href=https://software.berkeley.edu/microsoft>Berkeley provides MS Office for free here.</a></li>
+	</ul>
+<li><a href=https://www.videolan.org/vlc/index.html>VLC</a> (it's free!)</li>
+	<ul>
+	<li>I use VLC when I need to format transcripts. The web player for lecture videos is really clunky and whenever you have to go back a few seconds it reloads the entire video from that spot, so it's slow on top of that. I like to download the video and open it in VLC just for the abiltiy to jump between places in the video lag-free.</li>
+	<li>Additionally, VLC lets you take screenshots (so when slides aren't provided for you, you still can include them in transcripts).</li>
+	</ul>
+<li><a href=http://stevemiller.net/puretext/>PureText 3.0</a> (it's also free!)</li>
+	<ul>
+	<li>Not strictly required, but makes copy and pasting from web-pages to Word Docs easy. You know how formatting gets copied when you paste things into Word? PureText lets you only copy the text, and not the formatting. I know there's a Word option to disable pasted formatting, but you have to hover over the Paste Options and then hit "Keep Text Only (T)". It doesn't seem like it saves much time, but you copy and paste <i>a lot</i> when making the overview.</li>
+	<li>This seems to be a Windows-only utility. Mac alternative: <a href=http://www.bluem.net/en/mac/plain-clip/>Plain Clip</a> in conjunction with <a href=http://www.shadowlab.org/softwares/spark.php>Spark</a>.</li>
+	</ul>
+</ol>
+</div>
+
+<br><div id="bubble">
+<h2><a name="formatting">Formatting Transcripts</a></h2>
+
+Formatting the text and slides such that they look like this: <p><img src="transcripts.jpg"><p>
+
+For this section, you need:
+<ol type="1">
+<li>Transcript text file</li>
+<li>Slides</li>
+<li>Microsoft Word</li>
+<li>Microsoft PowerPoint</li>
+<li>A template just to keep things standardized across readers--<a href="transcript_template.docx">I use this one.</a></li>
+</ol>
+
+Steps:
+<ol>
+  <li>Open up the <a href="transcript_template.docx">transcript template</a>.</li>
+  <li>Edit the header to match the name and video length of the lecture. Include the name of the lecturer if you wish (nowadays I just leave it out--that information isn't really important). Edit the <b>[Watch Online]</b> link to go to the lecture video. Usually the link looks something like <i>https://d2egua14l5soou.cloudfront.net/MPHW205_v13/indexes/w205_v13_l9_1.html</i>.<p><img src=header.png></li>
+  <li>Now, sometimes when you format transcripts you'll get a word doc with all the slides and text already in there. Nice! All you have to do is copy and paste everything into the transcript template and move on to step 8. Sometimes you don't, though, so you need to insert in the PowerPoint slides yourself.</li>
+  <li>There are two ways to get slides.<p>
+  	 a) If you already have the .ppt file, open the file in PowerPoint. File > Save As > select <b>PNG Portable Network Graphics Format</b> under Save as type. This lets you export all the slides as PNG, the highest quality image type available. <p><img src=save_prompt.gif><p> 
+	 b) At the prompt, select <b>Every Slide</b>... <p><img src=every_slide.png><p>
+	 c) ...and you'll have all the slides saved as a folder wherever you chose to save them! Yay! <p><img src=slides_woo.png>
+  <li>If you don't have the slides, you'll have to take screenshots from the lecture video itself to produce them. This is how I do that (if you have another way, feel free to use that method):<p>
+  		aa) Open up the lecture in a browser: <p><img src=open_lecture.gif><p>
+  		bb) View Source (Ctrl+U), look for the link that looks like <b>"http:// . . . .mp4"</b><p><img src=mp4_link.gif><p>
+		cc) Open link in new tab, save video by (Ctrl+S). <p><img src=save_mp4.gif><p>
+		dd) Open video in VLC. Use the command (Shift+S) to save screenshots to your Pictures folder (when you save an image it tells you where VLC saved it to). <p><img src=vlc_save.gif><p>
+  <li>Now you have to insert the slide images into their rightful place. So you need to play the video to know where to put those slide images. I like to download the .mp4 and play it in VLC (steps aa through cc above) because when you play the video directly from the online site, it's really laggy and you always have to wait a few seconds for the video to buffer if you're going back a few seconds in the video. Also, in VLC you're allowed to change the speed of playback. :)</li>
+  <li>Now you have something like this!<p><img src=done_transcript.jpg></li>
+  <li>Almost done! Make sure the font is Calibri size 12, and select the entire document (Ctrl+A) and right click -> change line spacing to Multiple at 1.15. This is the font/line space option I've been using for a while, so just to keep everything on the same page... though you're free to change this if you want. Just keep it consistent across a course-worth of readers! :)
+  <li>If you're copy and pasting from an old set of transcripts, above some of the slides might be something like "Slide 1" or "Slide 2" to show the slide number. Go ahead and delete those lines if you see them. Image of what I'm talking about: <img src=slide_numbers.jpg> 
+  <li>When you're done, select all the files in the folder, right click -> convert to Adobe PDF. Alternatively, open the file in Word and go to File > Save Save as Adobe PDF. <p><img src=turn_to_pdf.jpg></li>
+You're done! Your final .pdf should look like this: <a href=example_transcript.pdf>click here to see</a>.
+</ol></div>
+
+<br><div id="bubble">
+<h2><a name="collecting">Collecting Readings</a></h2>
+The goal to is have as much required readings as possible as .pdfs to put into the reader (I don't include optional readings in the reader; instead I just provide a link to them so if students want to check them out they can download them). <p>Usually the instructors provide you with all the readings in you need. Sometimes they forget to include something, though. Generally I try Googling for the required file, and most of the time I can find it so it's alright. Sometimes I really do have to go back and ask for it, though. It happens. <p>
+	Sometimes instructors provide a link to a website to read some text (online newspaper article)--in those cases, I like to save the page as a PDF so people don't need internet to access those readings. For example, with a site of like <a href=http://www.thenation.com/article/evidence-things-not-seen/>this</a>, I would make a PDF out of. So hunt for a little printer icon (if possible) or just Ctrl+P and print the webpage as a PDF. Done!<p><img src=online_as_pdf.gif><p>
+	If a reading spans multiple pages I would copy and paste everything into a word doc and save the word doc as a pdf.
+</div>
+
+<br><div id="bubble">
+<h2><a name="overview">Create Overview</a></h2>
+<a href=overview_example.doc>So here's an example of an overview (still as a word doc)</a>. Go ahead and open it up and use that as a template. I pulled all of this information for this particular week's overview from <a href=https://bcourses.berkeley.edu/courses/1318267/pages/week-3>here (I've invited you, Vanessa, to this course site)</a>.<p>
+Create one document per week. Frequently under each week there are separate "Modules" or "Topics"--for each of these, I separate them into different pages. This is so when we add the readings and transcripts to make the reader, each module/topic has its own overview page. <p>
+Again, to make the overview, generally I include an Introduction to the Week, the learning outcomes, the lecture (link to lecture and length of the video, plus mp3 and transcript link if it's available), list of readings (for the required readings, I put an asterisk next to the ones that will be included in the reader; for the optional readings, I provide a link to them). Sometimes they'll ask to skip the introduction or include a section (in this case, the discussion) to the week. Genearlly if they don't say anything, though, I'll go with the above things.<p>
+Yep... so just change the links and text. Make sure the font stays as 12 pt Calibri!<p>When you're done, save each Week Overview as a .pdf (like you saved the transcripts as a .pdf).
+</div>
+
+<br><div id="bubble">
+<h2><a name="together">Putting It All Together in Adobe Reader</a></h2>
+<ol>
+<li>Open your .pdf'd overview in Adobe Reader.<p><img src=edit_in_adobe.gif></li>
+<li>While opened on the first overview page, insert the first lecture with <b>Insert From File</b> on the right.<p><img src=insert_lecture.gif></li>
+<li>The first page of the first lecture should be selected (in your viewing window). On top of the left panel, click on the <b>New Bookmark</b> button. Type in "Slides and Transcripts". When you click on "New Bookmark", it creates a bookmark on that page. In the end, the plug-in will take these bookmarks and create the Table of Contents with them.<p><img src=new_bookmark1.gif></li>
+<li>Make another bookmark on the first page of the lecture--this time, type the actual name (and length) of the lecture. <p><img src=new_bookmark2.gif></li>
+<li>Repeat step 4 until you have all the required lectures. Then repeat step 3, this time creating a section for "Required Readings". Then repeat step 4 again for the readings. Move all the bookmarks to the right hierarchy like so:<p><img src="bookmarks_done.gif" "width=700"></li>
+<li>FYI: Sometimes when you add readings, they add extra bookmarks like so. Just delete those bookmarks (Kaplan_The use of logic models.pdf in this case).<p><img src=extra_bookmark.gif></li>
+</ol>
+
+Okay, you put everything together in Adobe Reader! Now to make the Table of Contents.
+</div>
+
+<br><div id="bubble">
+<h2><a name="toc">Creating the Table of Contents, Renumbering Pages, Add ToC Image.</a></h2>
+<ol>
+<li>Plug-Ins > Table of Contents > Craete TOC from Bookmarks<p><img src=create_toc.gif></li>
+<li>You get this window. Please import <a href=TOCSettings.toc>these settings with this file.</a> Import with the "Load Settings..." button. Change the "Title" to "PH WXXX: Course Name - Week X Reader" according to the name of the course/course number/week of the reader you're making.<p><img src=gen_toc.gif></li>
+<li>Hit OK.<p><img src=toc_done.gif></li>
+<li>Select all the pages from the left panel, and click "Number Pages..." We're renumbering all the pages to start from 1, just in case adding the new ToC didn't change the page numbers.<p><img src=number_pages.gif></li>
+<li>Use these settings, hit OK.<p><img src=number_pages2.gif width=700></li>
+<li>Now, add the Table of Contents header image. <b>"Add Images"</b> at the right... Add <a href=sa.png>this image</a>. <p><img src=add_image.gif></li>
+<li>Align image. Use your keyboard up/down/left/right buttons to move it pixel by pixel. I just eyeball it until it seems right.<p><img src=align_image.jpg></li>
+</ol>
+</div>
+
+<br><div id="bubble">
+<h2><a name="footer">Footer (Page numbers, "Return to Table of Contents" Button)</a></h2>
+<ol>
+<li>You now have a file that has the table of contents and reader pages put together, but without page numbers and a button at the bottom that says "Return to Table of Contents." <b>Before doing anything else, save a copy of this file and put it somewhere safe.</b> I name this copy "Week X (without page numbers or return to table of contents button)". It's important to save this because sometimes you need to add more pages or delete pages from a reader at an instructor's request; and it's impossible to remove the page numbers and table of contents button once you put them on the reader! So make a "clean" copy and put it aside incase you need to make revisions to the reader. It's good to have a backup incase Adobe crashes in the next couple of steps (it has happened before).
+<li>After having made a copy, click the "Header & Footer" button at the right panel. Click "Add New". ("Replace Exisiting" will remove all the headers from the transcripts and overviews).<p><img src=add_header.gif></li>
+<li>Use these settings.<p><img src=page_number_settings.gif></li>
+<li>Under "Page Range Options", go from page 2 to whatever the last page of the reader is. Hit OK.<p><img src=page_number_settings2.gif></li>
+<li>Hit OK again and the page numbers should be added.
+<li>While you're on Page 2, hit the Add Interactive button under Interactive Objects. Place it anywhere.<p><img src=add_interactive.png></li>
+<li>Hit All Properties.<p><img src=all_props.png></li>
+<li>Use these properties.<p><img src=button_prop1.gif><p><img src=button_prop2.gif><p><img src=button_prop3.gif><p><img src=button_prop4.gif><p>For this one: Make sure "Select Trigger" is "Mouse Down" and "Select Action" is "Go to a page view". Click "Add", scroll to page 1, and then confirm. Then click "Go to a page view" and "Edit", and change the zoom to "Inherit" (so people's zoom setting doesn't change when they click on the button).<p><img src=button_prop5.gif></li>
+<li>Right click the newly created button, and Duplicate Across Pages.<p><img src=dupe_across_pages.gif></li>
+<li>Go from page 2 to the last page of the document.<p><img src=dupe_across_pages.gif></li>
+<li>Done! Save it all.</li>
+</ol>
+</div>
+
+<br><div id="bubble">
+<h2><a name="compress">Compress File</a></h2>
+I like to compress the resulting reader with <a href=smallpdf.com/compress-pdf>this service.</a><p><img src=compress_pdf.gif><p>
+Woo hoo! You finished one week of reader! Now do the other weeks (usually 6 or 7 weeks in a given course). :)
+</div>
+
+<br><div id="bubble">
+<h2><a name="versioncontrol">Version Control</a></h2>
+Upload it allllll to Box, for the next person who has to make the readers' convenience! But before doing so, I like to organize the folders like so:<p><img src=done_folder.gif><p>
+And in each folder:<p><img src=done_folder_2.gif>
+</div>
+
+<br><div id="bubble">
+<h2><a name="issues">Occasional Issues</a></h2>
+<li>PDF can't be added because it has file protection on it: use <a href=http://smallpdf.com/unlock-pdf>this site</a> to unlock it.</li>
+<li>Transcript only available as a .pdf, not word doc: use <a href=http://smallpdf.com/pdf-to-word>this</a>.</li>
+</div>
+
+<br><div id="bubble">
+<h2><a name="done">All done!</a></h2>
+Email me if there are any issues/confusion! I know it's a lot to take in at once!
+</div>
+
+</div>

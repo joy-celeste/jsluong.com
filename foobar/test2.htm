@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta
+charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="none" />
+
+<title>Google Foobar - Challenge #2</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header><h1><em>Challenge #2</em>: Braille Translation</h1>
+<h2>Problem text</h2>
+Braille is a writing system used by the visually impaired. Each character is composed of 6 dots in a 2x3 grid. Each dot can either be a bump, or no bump. It was invented so that people can feel the bumps on a page, and be able to "read" text with their touch. One aspect of coding work is adapting to expectations. This challenge will require you to translate a string of plain text to Braille. The special printer which can print the bumps onto the page expects the dots in the order:<p>
+
+<pre><code>1 4
+2 5
+3 6</code></pre>
+
+So given the plain text:<p>
+<code>"look"</code><p>
+
+we get the Braille<p>
+<pre><code>10 10 10 10
+10 01 01 01
+10 10 10 00</code></pre>
+
+Becomes the output string<p>
+<code>111000101010101010100010</code>
+
+For this challenge, define a function called answer() which returns a binary string of 1's and 0's representing the bumps and absence of bumps of an input string of text. <p>
+
+This challenge only expects translation of the 26 lowercase characters, a capitalization mark, and a blank character for space. In practice, common words may have abbreviations to making reading faster, though this challenge will not require those.
+
+<h2>Test Cases</h2>
+
+<pre><code>Inputs:
+    (string) plaintext = "code"
+Output:
+    (string) "100100101010100110100010"
+
+Inputs:
+    (string) plaintext = "Braille"
+Output:
+    (string) "000001110000111010100000010100111000111000100010"</code></pre>
+
+<h2>My solution</h2>
+
+<pre><code>import string
+
+dict = { 
+    ' ':'000000', '*':'000001',
+    'e':'100010', 't':'011110', 'a':'100000', 'o':'101010', 
+    'i':'010100', 'n':'101110', 's':'011100', 'h':'110010',
+    'r':'111010', 'd':'100110', 'l':'111000', 'c':'100100',
+    'u':'101001', 'm':'101100', 'w':'010111', 'f':'110100',
+    'g':'110110', 'y':'101111', 'p':'111100', 'b':'110000',
+    'v':'111001', 'k':'101000', 'j':'010110', 'x':'101101',
+    'q':'111110', 'z':'101011'
+    }
+
+def replace_all(text, dic):
+    for i, j in dic.iteritems():
+        text = text.replace(i, j)
+    return text
+    
+def answer(plaintext):
+    s = ''.join([("*" + str.lower(i)) if str.isupper(i) else i for i in str(plaintext)])
+    return replace_all(s, dict)
+</code></pre>
+
+<a href="http://pythontutor.com/visualize.html#code=import%20string%0A%0Adict%20%3D%20%7B%20%0A%20%20%20%20'%20'%3A'000000',%20'*'%3A'000001',%0A%20%20%20%20'e'%3A'100010',%20't'%3A'011110',%20'a'%3A'100000',%20'o'%3A'101010',%20%0A%20%20%20%20'i'%3A'010100',%20'n'%3A'101110',%20's'%3A'011100',%20'h'%3A'110010',%0A%20%20%20%20'r'%3A'111010',%20'd'%3A'100110',%20'l'%3A'111000',%20'c'%3A'100100',%0A%20%20%20%20'u'%3A'101001',%20'm'%3A'101100',%20'w'%3A'010111',%20'f'%3A'110100',%0A%20%20%20%20'g'%3A'110110',%20'y'%3A'101111',%20'p'%3A'111100',%20'b'%3A'110000',%0A%20%20%20%20'v'%3A'111001',%20'k'%3A'101000',%20'j'%3A'010110',%20'x'%3A'101101',%0A%20%20%20%20'q'%3A'111110',%20'z'%3A'101011'%0A%20%20%20%20%7D%0A%0Adef%20replace_all(text,%20dic%29%3A%0A%20%20%20%20for%20i,%20j%20in%20dic.iteritems(%29%3A%0A%20%20%20%20%20%20%20%20text%20%3D%20text.replace(i,%20j%29%0A%20%20%20%20return%20text%0A%20%20%20%20%0Adef%20answer(plaintext%29%3A%0A%20%20%20%20s%20%3D%20''.join(%5B(%22*%22%20%2B%20str.lower(i%29%29%20if%20str.isupper(i%29%20else%20i%20for%20i%20in%20str(plaintext%29%5D%29%0A%20%20%20%20return%20replace_all(s,%20dict%29%0A%20%20%20%20%0Aanswer(%22Braille%22%29&cumulative=false&curInstr=83&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=2&rawInputLstJSON=%5B%5D&textReferences=false">Edit and run code in Online Python Tutor</a>
+
+</body></html>

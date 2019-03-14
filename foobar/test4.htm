@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta
+charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="none" />
+
+<title>Google Foobar - Challenge #4</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header><h1><em>Challenge #4</em>: Find the Access Codes</h1>
+<h2>Problem text</h2>
+In order to destroy Commander Lambda's LAMBCHOP doomsday device, you'll need access to it. But the only door leading to the LAMBCHOP chamber is secured with a unique lock system whose number of passcodes changes daily. Commander Lambda gets a report every day that includes the locks' access codes, but only she knows how to figure out which of several lists contains the access codes. You need to find a way to determine which list contains the access codes once you're ready to go in. <p>
+
+Fortunately, now that you're Commander Lambda's personal assistant, she's confided to you that she made all the access codes 
+"lucky triples" in order to help her better find them in the lists. A "lucky triple" is a tuple (x, y, z) where x divides y and 
+y divides z, such as (1, 2, 4). With that information, you can figure out which list contains the number of access codes that matches the number of 
+locks on the door when you're ready to go in (for example, if there's 5 passcodes, you'd need to find a list with 5 "lucky 
+triple" access codes).<p>
+
+Write a function answer(l) that takes a list of positive integers l and counts the number of "lucky triples" of (lst[i], lst[j], lst[k]) 
+where i < j < k.  The length of l is between 2 and 2000 inclusive.  The elements of l are between 1 and 999999 inclusive.  The answer fits 
+within a signed 32-bit integer. Some of the lists are purposely generated without any access codes to throw off spies, so if no triples are found, 
+return 0. <p>
+
+For example, <code>[1, 2, 3, 4, 5, 6]</code> has the triples: <code>[1, 2, 4], [1, 2, 6], [1, 3, 6]</code>, making the answer 3 total.<p>
+
+<h2>Test Cases</h2>
+
+<pre><code>Inputs:
+    (int list) l = [1, 1, 1]
+Output:
+    (int) 1
+
+Inputs:
+    (int list) l = [1, 2, 3, 4, 5, 6]
+Output:
+    (int) 3
+    </code></pre>
+
+<h2>My solution</h2>
+
+<pre><code># Sorry the code can't explain itelf!
+# Expanation: https://goo.gl/qbOUH3
+
+def answer(l):    
+    length = len(l)
+    col, row = [], []
+    
+    for i in range(1, length):
+        col.append(sum([1 if (l[i]%l[q]==0) else 0 for q in range(i)]))
+        row.append(sum([1 if (l[q]%l[i]==0) else 0 for q in range(i+1, length)]))
+        
+    return sum([a*b for a,b in zip(col, row)])
+</code></pre>
+
+<a href="http://pythontutor.com/visualize.html#code=def%20answer(l%29%3A%20%20%20%20%0A%20%20%20%20length%20%3D%20len(l%29%0A%20%20%20%20col,%20row%20%3D%20%5B%5D,%20%5B%5D%0A%20%20%20%20%0A%20%20%20%20for%20i%20in%20range(1,%20length%29%3A%0A%20%20%20%20%20%20%20%20col.append(sum(%5B1%20if%20(l%5Bi%5D%25l%5Bq%5D%3D%3D0%29%20else%200%20for%20q%20in%20range(i%29%5D%29%29%0A%20%20%20%20%20%20%20%20row.append(sum(%5B1%20if%20(l%5Bq%5D%25l%5Bi%5D%3D%3D0%29%20else%200%20for%20q%20in%20range(i%2B1,%20length%29%5D%29%29%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20return%20sum(%5Ba*b%20for%20a,b%20in%20zip(col,%20row%29%5D%29%0A%20%20%20%20%0Aanswer(%5B1,%202,%203,%204,%205,%206%5D%29&cumulative=false&curInstr=0&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=2&rawInputLstJSON=%5B%5D&textReferences=false">Edit and run code in Online Python Tutor</a>
+
+</body></html>

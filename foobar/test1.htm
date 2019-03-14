@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta
+charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="none" />
+
+<title>Google Foobar - Challenge #1</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header><h1><em>Challenge #1</em>: I Love Lance & Janice</h1>
+<h2>Problem text</h2>
+You've caught two of your fellow minions passing coded notes back and forth - while they're on duty, no less! Worse, you're pretty sure it's not job-related - they're both huge fans of the space soap opera "Lance & Janice". You know how much Commander Lambda hates waste, so if you can prove that these minions are wasting her time passing non-job-related notes, it'll put you that much closer to a promotion. <p>
+
+Fortunately for you, the minions aren't exactly advanced cryptographers. In their code, every lowercase letter [a..z] is replaced with the corresponding one in [z..a], while every other character (including uppercase letters and punctuation) is left untouched.  That is, 'a' becomes 'z', 'b' becomes 'y', 'c' becomes 'x', etc.  For instance, the word "vmxibkgrlm", when decoded, would become "encryption". <p>
+
+Write a function called answer(s) which takes in a string and returns the deciphered string so you can show the commander proof that these minions are talking about "Lance & Janice" instead of doing their jobs.
+
+<h2>Test Cases</h2>
+<pre><code>Inputs:
+    (string) s = "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
+Output:
+    (string) "did you see last night's episode?"
+
+Inputs:
+    (string) s = "Yvzs! I xzm'g yvorvev Lzmxv olhg
+                  srh qly zg gsv xlolmb!!"
+Output:
+    (string) "Yeah! I can't believe Lance lost 
+              his job at the colony!!"
+</code></pre>
+
+<h2>My solution</h2>
+<pre><code>import string
+def answer(s):
+    s = str(s)
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    flipped = letters[::-1]
+
+    t = string.maketrans(letters, flipped)
+    return s.translate(t)</pre></code>
+
+<a href="http://pythontutor.com/visualize.html#code=import%20string%0Adef%20answer(s%29%3A%0A%20%20%20%20s%20%3D%20str(s%29%0A%20%20%20%20letters%20%3D%20'abcdefghijklmnopqrstuvwxyz'%0A%20%20%20%20flipped%20%3D%20letters%5B%3A%3A-1%5D%0A%0A%20%20%20%20t%20%3D%20string.maketrans(letters,%20flipped%29%0A%20%20%20%20return%20s.translate(t%29%0A%20%20%20%20%0Aanswer(%22Yvzs!%20I%20xzm'g%20yvorvev%20Lzmxv%20olhg%20srh%20qly%20zg%20gsv%20xlolmb!!%22%29&cumulative=false&curInstr=0&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=2&rawInputLstJSON=%5B%5D&textReferences=false">Edit and run code in Online Python Tutor</a>
+
+</body></html>

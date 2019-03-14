@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta
+charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="none" />
+
+<title>Google Foobar - Challenge #3</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header><h1><em>Challenge #3</em>: Lovely Lucky LAMBs</h1>
+<h2>Problem text</h2>
+Being a henchman isn't all drudgery. Occasionally, when Commander Lambda is feeling generous, she'll hand out Lucky LAMBs (Lambda's All-purpose Money Bucks). Henchmen can use Lucky LAMBs to buy things like a second pair of socks, a pillow for their bunks, or even a third daily meal!<p>
+
+However, actually passing out LAMBs isn't easy. Each henchman squad has a strict seniority ranking which must be respected - or else the henchmen will revolt and you'll all get demoted back to minions again! <p>
+
+There are 4 key rules which you must follow in order to avoid a revolt:
+
+<ol>
+<li>The most junior henchman (with the least seniority) gets 
+exactly 1 LAMB.  (There will always be at least 1 henchman on a 
+team.)</li>
+<li>TA henchman will revolt if the person who ranks immediately 
+above them gets more than double the number of LAMBs they do.</li>
+<li>TA henchman will revolt if the amount of LAMBs given to their 
+next two subordinates combined is more than the number of LAMBs they 
+get.  (Note that the two most junior henchmen won't have two 
+subordinates, so this rule doesn't apply to them.  The 2nd most 
+junior henchman would require at least as many LAMBs as the most 
+junior henchman.)</li>
+<li>Tou can always find more henchmen to pay - the Commander has 
+plenty of employees.  If there are enough LAMBs left over such that 
+another henchman could be added as the most senior while obeying the 
+other rules, you must always add and pay that henchman.</li>
+</ol>
+
+Note that you may not be able to hand out all the LAMBs. A single LAMB cannot be subdivided. That is, all henchmen must get a positive integer number of LAMBs.<p>
+
+Write a function called answer(total_lambs), where total_lambs is the integer number of LAMBs in the handout you are trying to divide. It should return an integer which represents the difference between the minimum and maximum number of henchmen who can share the LAMBs (that is, being as generous as possible to those you pay and as stingy as possible, respectively) while still obeying all of the above rules to avoid a revolt.  For instance, if you had 10 LAMBs and were as generous as possible, you could only pay 3 henchmen (1, 2, and 4 LAMBs, in order of ascending seniority), whereas if you were as stingy as possible, you could pay 4 henchmen (1, 1, 2, and 3 LAMBs). Therefore, answer(10) should return 4-3 = 1.<p>
+
+To keep things interesting, Commander Lambda varies the sizes of the Lucky LAMB payouts: you can expect total_lambs to always be between 10 and 1 billion (10 ^ 9).
+
+<h2>Test Cases</h2>
+
+<pre><code>Inputs:
+    (int) total_lambs = 10
+Output:
+    (int) 1
+
+Inputs:
+    (int) total_lambs = 143
+Output:
+    (int) 3</code></pre>
+
+<h2>My solution</h2>
+
+<pre><code>import bisect
+
+fibSums = [1, 2, 4, 7, 12, 20, 33, 54, 88, 143, 232, 376, 609, 
+        986, 1596, 2583, 4180, 6764, 10945, 17710, 28656, 
+        46367, 75024, 121392, 196417, 317810, 514228, 832039, 
+        1346268, 2178308, 3524577, 5702886, 9227464, 14930351, 
+        24157816, 39088168, 63245985, 102334154, 165580140, 
+        267914295, 433494436, 701408732]
+        
+doubleSums = [1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 
+        4095, 8191, 16383, 32767, 65535, 131071, 262143, 524287, 
+        1048575, 2097151, 4194303, 8388607, 16777215, 33554431, 
+        67108863, 134217727, 268435455, 536870911]
+
+def answer(total_lambs):
+    stingy = bisect.bisect_left(fibSums, total_lambs+0.1)
+    generous = bisect.bisect_left(doubleSums, total_lambs+0.1)
+    return stingy - generous
+</code></pre>
+
+<a href="http://pythontutor.com/visualize.html#code=import%20bisect%0A%0AfibSums%20%3D%20%5B1,%202,%204,%207,%2012,%2020,%2033,%2054,%2088,%20143,%20232,%20376,%20609,%20%0A%20%20%20%20%20%20%20%20986,%201596,%202583,%204180,%206764,%2010945,%2017710,%2028656,%20%0A%20%20%20%20%20%20%20%2046367,%2075024,%20121392,%20196417,%20317810,%20514228,%20832039,%20%0A%20%20%20%20%20%20%20%201346268,%202178308,%203524577,%205702886,%209227464,%2014930351,%20%0A%20%20%20%20%20%20%20%2024157816,%2039088168,%2063245985,%20102334154,%20165580140,%20%0A%20%20%20%20%20%20%20%20267914295,%20433494436,%20701408732%5D%0A%20%20%20%20%20%20%20%20%0AdoubleSums%20%3D%20%5B1,%203,%207,%2015,%2031,%2063,%20127,%20255,%20511,%201023,%202047,%20%0A%20%20%20%20%20%20%20%204095,%208191,%2016383,%2032767,%2065535,%20131071,%20262143,%20524287,%20%0A%20%20%20%20%20%20%20%201048575,%202097151,%204194303,%208388607,%2016777215,%2033554431,%20%0A%20%20%20%20%20%20%20%2067108863,%20134217727,%20268435455,%20536870911%5D%0A%0Adef%20answer(total_lambs%29%3A%0A%20%20%20%20stingy%20%3D%20bisect.bisect_left(fibSums,%20total_lambs%2B0.1%29%0A%20%20%20%20generous%20%3D%20bisect.bisect_left(doubleSums,%20total_lambs%2B0.1%29%0A%20%20%20%20return%20stingy%20-%20generous%0A%20%20%20%20%0Aanswer(143%29&cumulative=false&curInstr=0&heapPrimitives=false&mode=edit&origin=opt-frontend.js&py=2&rawInputLstJSON=%5B%5D&textReferences=false">Edit and run code in Online Python Tutor</a>
+
+</body></html>

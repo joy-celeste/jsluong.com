@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Google Foobar Solutions"
+AuthUserFile "/home/tolcylsi/.htpasswds/public_html/foobar/passwd"
+require valid-user

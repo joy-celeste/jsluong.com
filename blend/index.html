@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<!--
+  Stellar by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Frequencies and Gradients</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+  </head>
+<body>
+
+<!-- Wrapper -->
+  <div id="wrapper">
+
+<!-- Header -->
+  <header id="header" class="alt">
+    <!-- <span class="logo"><img src="images/logo.svg"></span> -->
+    <h1>Frequencies and Gradients</h1>
+    <p>Image editing within the frequency and gradient domains.<br> 
+      Built with Python, <code>numpy</code>, <code>scikit-image</code> and love.</p>
+  </header>
+
+<!-- Nav -->
+  <nav id="nav">
+    <ul>
+      <li><a href="#intro" class="active">Introduction</a></li>
+      <li><a href="#first">Unsharp Mask</a></li>
+      <li><a href="#second">Hybrid Images</a></li>
+      <li><a href="#third">Frequency Analysis</a></li>
+      <li><a href="#fourth">Multiresolution Blending</a></li>
+      <li><a href="#fifth">Poisson Blending</a></li>
+    </ul>
+  </nav>
+
+<!-- Main -->
+  <div id="main">
+
+<!-- Introduction -->
+<section id="intro" class="main">
+  <div class="spotlight">
+    <div class="content">
+      <header class="major"><h2>Introduction</h2></header>
+
+      <p>A reproduction of effects mentioned in various papers in Python and with the <code>numpy</code> and <code>scikit-image</code> libraries.<p>
+      Hybrid Images: <a href="http://cvcl.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf">2006 paper by Oliva, Torralba, and Schyns.</a><br>
+      Multiresolution Blending: <a href="http://persci.mit.edu/pub_pdfs/spline83.pdf">1983 paper by Burt and Adelson.</a><br>
+      Poisson Blending: <a href="http://www.cs.brown.edu/courses/csci1950-g/asgn/proj2/resources/PoissonImageEditing.pdf">2003 paper by Perez et al.</a><br>
+
+
+    </div>
+    <span class="image"><img src="images/main.jpg"></span>
+  </div>
+</section>
+
+ <!-- Section 1 -->
+<section id="first" class="main">
+    <div class="content">
+      <header class="major"><h2>Unsharp Mask</h2></header>
+  
+        <div class="box alt">
+        <div class="row uniform">
+        <div class="3u"><span class="image fit"><a href="images/1.1/sleeping_beauty.jpg"><img src="images/1.1/sleeping_beauty.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><span class="image fit"><a href="images/1.1/sleeping_beauty_s.jpg"><img src="images/1.1/sleeping_beauty_s.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.1/grandmother.jpg"><img src="images/1.1/grandmother.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.1/grandmother_s.jpg"><img src="images/1.1/grandmother_s.jpg"></a></span></div>
+      </div>
+
+      <center>(click to view larger images)</center><br>
+
+      <p>As a warm-up exercise, we performed unsharp masking. We subtracted a blurred, or "unsharp", from the original image to extract the highest frequencies. Then we added these back to the original image to enhance sharpness.
+    </div>
+</section>
+
+
+ <!-- Section 2 -->
+<section id="second" class="main">
+    <div class="content">
+      <header class="major"><h2>Hybrid Images</h2></header>
+  
+        <b>Hybrid images</b> look different depending on viewing distance. This is because higher frequencies tend to be visible up close while lower frequencies dominate visual perception when the viewer is far away.<br><br>
+
+        To replicate this effect, we blend the higher frequenices of one image with the lower frequencies of another. <p>
+
+        <center><b>Displayed:</b> a picture of a redhead, <a href="https://vianaarts.deviantart.com/art/Redhead-Girl-Ballpoint-Pen-310870595">a drawing of said redhead</a>, hybrid image.<br>
+        <b>Below:</b> frequency analysis of each picture.<br>(last is larger because original blended image resulted in extraneous black space, which we cropped out)</center><br>
+        <div class="box alt">
+        <div class="row uniform">
+        <div class="4u"><span class="image fit"><a href="images/1.2/red_head_original.jpg"><img src="images/1.2/red_head_original.jpg"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/1.2/red_head_pens.jpg"><img src="images/1.2/red_head_pens.jpg"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/1.2/result.jpg" height=520><img src="images/1.2/result.jpg"></a></span></div>
+
+        <div class="4u"><span class="image fit"><a href="images/1.2/bic_girl/original.png"><img src="images/1.2/bic_girl/original.png"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/1.2/bic_girl/pens.png"><img src="images/1.2/bic_girl/pens.png"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/1.2/bic_girl/final.png"><img src="images/1.2/bic_girl/final.png"></a></span></div></div></div>
+
+        Frequency analysis gives us better insight into which parts of the final image are from the first image and which components are from the second.<p>
+
+        <center><b>Displayed:</b> the drawing with a high-pass filter, the orignal with a low-pass filter, and their respective frequency domain graphs.<br></center><br>
+
+        <div class="box alt">
+        <div class="row uniform">
+        <div class="3u"><span class="image fit"><a href="images/1.2/bic_girl/highpass.jpg"><img src="images/1.2/bic_girl/highpass.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.2/bic_girl/highpass.png"><img src="images/1.2/bic_girl/highpass.png"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.2/bic_girl/lowpass.jpg"><img src="images/1.2/bic_girl/lowpass.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.2/bic_girl/lowpass.png"><img src="images/1.2/bic_girl/lowpass.png"></a></span></div></div><br>
+
+        <center><b>Displayed:</b> <a href="http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/durchschnittsgesichter/durchschnittsgesichter.htm">image of average male, image of average female</a>, hybrid image.<br></center><p>
+
+        <div class="box alt">
+        <div class="row uniform">
+        <div class="4u"><span class="image fit"><a href="images/1.2/male.jpg"><img src="images/1.2/male.jpg"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/1.2/female.jpg"><img src="images/1.2/female.jpg"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/1.2/male_female.jpg"><img src="images/1.2/male_female.jpg"></a></span></div></div><br>
+
+        Unfortunately, the technique applied on a picture and a line drawing of Benedict Cumberbatch did not appear to be very effective. The harsh lines of the drawing dominated the softer features that made up the picture.<p>
+
+        <center><b>Displayed:</b> Benedict Cumberbatch, <a href="http://al-cook.tumblr.com">a line drawing of Benedict Cumberbatch</a>, hybrid image.<br></center><br>
+
+        <div class="box alt">
+        <div class="row uniform">
+        <div class="4u"><span class="image fit"><a href="images/1.2/b.jpg"><img src="images/1.2/b.jpg"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/1.2/c.jpg"><img src="images/1.2/c.jpg"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/1.2/line_bc.jpg"><img src="images/1.2/line_bc.jpg"></a></span></div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Section 3 -->
+<section id="third" class="main">
+    <div class="content">
+      <header class="major"><h2>Frequency Analysis</h2></header>
+
+      To better analyze and interpret the results from creating hybrid images, we can generate the gaussian and laplacian stacks for the hybrid image. The gaussian stack is created by repeatedly applying a gaussian filter to an image; the laplacian stack is created by subtracting adjacent images in the gaussian stack. <p>
+
+      <h2><a href="http://cvcl.mit.edu/hybrid_gallery/gallery.html">Marilyn Monroe and Albert Einstein (click for source)</a></h2>
+      <div class="box alt">
+        <div class="row uniform">
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_0.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_0.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_1.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_1.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_2.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_2.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_3.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_3.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_4.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_4.jpg"></a></span></div>
+        <div class="2u$"><span class="image fit"><a href="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_5.jpg"><img src="images/1.3/marilyn_einstein/gaussian_marilyn_einstein.jpg_5.jpg"></a></span></div>
+
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_0.jpg"><img src="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_0.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_1.jpg"><img src="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_1.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_2.jpg"><img src="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_2.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_3.jpg"><img src="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_3.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_4.jpg"><img src="images/1.3/marilyn_einstein/lapacian_marilyn_einstein.jpg_4.jpg"></a></span></div>
+        </div>
+      </div>
+
+      
+      <h2>Male or Female?</h2>
+      <div class="box alt">
+        <div class="row uniform">
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_0.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_0.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_1.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_1.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_2.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_2.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_3.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_3.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_4.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_4.jpg"></a></span></div>
+        <div class="2u$"><span class="image fit"><a href="images/1.3/male_female/gaussian_male_female.jpg_5.jpg"><img src="images/1.3/male_female/gaussian_male_female.jpg_5.jpg"></a></span></div>
+
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/lapacian_male_female.jpg_0.jpg"><img src="images/1.3/male_female/lapacian_male_female.jpg_0.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/lapacian_male_female.jpg_1.jpg"><img src="images/1.3/male_female/lapacian_male_female.jpg_1.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/lapacian_male_female.jpg_2.jpg"><img src="images/1.3/male_female/lapacian_male_female.jpg_2.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/lapacian_male_female.jpg_3.jpg"><img src="images/1.3/male_female/lapacian_male_female.jpg_3.jpg"></a></span></div>
+        <div class="2u"><span class="image fit"><a href="images/1.3/male_female/lapacian_male_female.jpg_4.jpg"><img src="images/1.3/male_female/lapacian_male_female.jpg_4.jpg"></a></span></div>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+
+<!-- Section 4 -->
+<section id="fourth" class="main">
+    <div class="content">
+      <header class="major"><h2>Multiresolution Blending</h2></header>
+      
+      To blend an image with a smooth spline (seam) joining two images together, we can use a technique called <b>multiresolution blending</b>. Multiresolution blending computes a gentle seam between the two images seperately at each band of image frequencies, resulting in a much smoother seam.
+
+      <p>
+      <center><b>Displayed:</b> an apple, an orange, an apporange, and an orapple.<br>
+        Computed with <a href="images/1.4/mask_gradient.jpg">this vertical mask</a>. Gradient masks result in smoother blending.<p></center>
+
+      <div class="box alt">
+        <div class="row uniform">
+        <div class="3u"><span class="image fit"><a href="images/1.4/apple.jpg"><img src="images/1.4/apple.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/orange.jpg"><img src="images/1.4/orange.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/apporange.jpg"><img src="images/1.4/apporange.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.4/orapple.jpg"><img src="images/1.4/orapple.jpg"></a></span></div></div>
+
+      <p>
+      <center><b>Displayed:</b> <a href="https://alicexz.deviantart.com/art/Do-You-Hear-the-People-Sing-356749686">art for Les Mis</a>, Les Mis movie poster, poster → drawing, drawing → poster.<br>
+        Computed with <a href="images/1.4/lm_mask.jpg">this diagonal mask</a>. Gradient masks result in smoother blending.<p></center>
+
+      <div class="box alt">
+        <div class="row uniform">
+        <div class="3u"><span class="image fit"><a href="images/1.4/lm_art.jpg"><img src="images/1.4/lm_art.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/lm_original.jpg"><img src="images/1.4/lm_original.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/posterdraw.jpg"><img src="images/1.4/posterdraw.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.4/drawposter.jpg"><img src="images/1.4/drawposter.jpg"></a></span></div></div>
+
+      <p>
+      <center><b>Displayed:</b> space, whale, space whale<br>
+        Computed with <a href="images/1.4/whale_mask_close.jpg">this close mask</a>. Close masks result in better results.</center> <p>
+
+      <div class="box alt">
+        <div class="row uniform">
+        <div class="4u"><span class="image fit"><a href="images/1.4/space.jpg"><img src="images/1.4/space.jpg"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/1.4/whale.jpg"><img src="images/1.4/whale.jpg"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/1.4/space_whale.jpg"><img src="images/1.4/space_whale.jpg"></a></span></div>
+
+        </div>
+      </div>
+
+      
+     <h2>More Frequency Analysis</h2>
+
+       Again, to better analyze and interpret the results from creating hybrid images, we can generate the gaussian and laplacian stacks, this time for the final image above, and for the masked off input images. <p>
+
+        <center><b>Displayed (each row):</b> final image, background only, whale only.<p>
+
+      <div class="box alt">
+        <div class="row uniform">
+
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian__whale.jpg_0.jpg"><img src="images/1.4/whale/lapacian__whale.jpg_0.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian__whale.jpg_1.jpg"><img src="images/1.4/whale/lapacian__whale.jpg_1.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian__whale.jpg_2.jpg"><img src="images/1.4/whale/lapacian__whale.jpg_2.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.4/whale/lapacian__whale.jpg_3.jpg"><img src="images/1.4/whale/lapacian__whale.jpg_3.jpg"></a></span></div>
+
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_bg.jpg_0.jpg"><img src="images/1.4/whale/lapacian_plain_bg.jpg_0.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_bg.jpg_1.jpg"><img src="images/1.4/whale/lapacian_plain_bg.jpg_1.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_bg.jpg_2.jpg"><img src="images/1.4/whale/lapacian_plain_bg.jpg_2.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_bg.jpg_3.jpg"><img src="images/1.4/whale/lapacian_plain_bg.jpg_3.jpg"></a></span></div>
+        
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_whale.jpg_0.jpg"><img src="images/1.4/whale/lapacian_plain_whale.jpg_0.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_whale.jpg_1.jpg"><img src="images/1.4/whale/lapacian_plain_whale.jpg_1.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_whale.jpg_2.jpg"><img src="images/1.4/whale/lapacian_plain_whale.jpg_2.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/1.4/whale/lapacian_plain_whale.jpg_3.jpg"><img src="images/1.4/whale/lapacian_plain_whale.jpg_3.jpg"></a></span></div>
+
+        </div>
+      </div>
+
+    </div>
+</section>
+
+ <!-- Section 5 -->
+<section id="fifth" class="main">
+    <div class="content">
+      <header class="major"><h2>A Toy Problem</h2></header>
+  
+        To get used to working with gradient domain processing, we started with a toy example. In this example we computed the <code>x</code> and <code>y</code> gradients from an image source <code>s</code>, then use all the gradients, plus one pixel intensity, to reconstruct an image <code>v</code>.<br><br>
+
+        For each pixel, then, we have two objectives: <br>
+        <code>min (v(x+1,y)-v(x,y) - (s(x+1,y)-s(x,y)))^2</code>: the x-gradients of <code>v</code> should closely match the x-gradients of <code>s</code>.<br>
+        <code>min (v(x,y+1)-v(x,y) - (s(x,y+1)-s(x,y)))^2</code>: the y-gradients of <code>v</code> should closely match the y-gradients of <code>s</code>.<br><br>
+
+        We also added a final objective: that the top left corners of the two images should be the same color.<br>
+        <code>minimize (v(1,1)-s(1,1))^2</code>.
+
+        <p><center><b>Displayed:</b> original image, reconstructed image.<p></center>
+
+        <div class="box alt">
+        <div class="row uniform" align="center">
+        <div class="3u"><span class="image fit"><a href="images/2.1/toy_problem.jpg"><img src="images/2.1/toy_problem.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="iimages/2.1/toy_problem_reconstructed.jpg"><img src="images/2.1/toy_problem_reconstructed.jpg""></a></span></div>
+        </div>
+      </div>
+
+    <div class="content">
+      <header class="major"><h2>Poisson Blending</h2></header>
+
+        The primary goal of poisson blending is seamlessly blending an object or texture from a source image into a target image. The simplest method would be to just copy and paste the pixels from one image directly into the other for a naive blend. Unfortunately, this creates an obvious seam between the source and target image. How can we do better?<br><br>
+
+        Gradients are the difference in intensity between two adjacent pixels. If we can set up the problem as finding values for the target pixels that maximally preserve the gradient of the source region without changing any of the background pixels, we can create a nice blend. Note: we are making a deliberate decision here to ignore the overall intensity! So a green hat could turn red. But at least it'll still look like a hat. <br>
+  
+        <p><center><b>Displayed:</b> spaaaace, whale, crude mask, naive blending attempt.</center><p>
+
+        <div class="box alt">
+        <div class="row uniform" align="center">
+        <div class="3u"><span class="image fit"><a href="images/2.2/space.jpg"><img src="images/2.2/space.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/whale.jpg"><img src="images/2.2/whale.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/whale_mask.jpg"><img src="images/2.2/whale_mask.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/2.2/whale_naive.jpg"><img src="images/2.2/whale_naive.jpg"></a></span></div></div><br>
+
+        Here are the final results, comparing multiresolution blending with poisson blending. Clearly, multiresolution maintains the original coloring of the whale while poisson blending prefers to maintain the gradients from the space background, resulting in a whale that is rather "ghostly".<br><br>
+
+        Despite the ghostly whale, we had decided that it was our favorite blend after blending multiple images. But we later decided we preferred the multiresolution blending because it preserved the colors more faithfully, even after trying to poisson blend with a close mask. <u>Thus, while this was our favorite result, we also decide it was mostly unsuccessful.</u><p>
+
+        <p><center><b>Displayed:</b> multiresolution blending with a close mask, poisson blending with a crude mask, poisson blending with close mask.<p>
+
+        <div class="box alt">
+        <div class="row uniform" align="center">
+
+        <div class="4u"><span class="image fit"><a href="images/1.4/space_whale.jpg"><img src="images/1.4/space_whale.jpg"></a></span></div>
+        <div class="4u"><span class="image fit"><a href="images/2.2/whale_blend.jpg"><img src="images/2.2/whale_blend.jpg"></a></span></div>
+        <div class="4u$"><span class="image fit"><a href="images/2.2/whale_blend_close.jpg"><img src="images/2.2/whale_blend_close.jpg"></a></span></div></div><p>
+
+        <p><center><b>Displayed:</b> author with cat ears, also the author with cat ears, a mask for a third eye, third-eyed monstrosity.<p>
+
+        <div class="box alt">
+        <div class="row uniform" align="center">
+        <div class="3u"><span class="image fit"><a href="images/2.2/eye_target.jpg"><img src="images/2.2/eye_target.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/eye_source.jpg"><img src="images/2.2/eye_source.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/eye_mask.jpg"><img src="images/2.2/eye_mask.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/2.2/eye_result.jpg"><img src="images/2.2/eye_result.jpg"></a></span></div></div>
+
+        <p><center><b>Displayed:</b> hikers, penguin, crude mask, penguin with hikers.<p>
+
+        <div class="box alt">
+        <div class="row uniform" align="center">
+        <div class="3u"><span class="image fit"><a href="images/2.2/peng_bg.jpg"><img src="images/2.2/peng_bg.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/peng.jpg"><img src="images/2.2/peng.jpg"></a></span></div>
+        <div class="3u"><span class="image fit"><a href="images/2.2/peng_mask.jpg"><img src="images/2.2/peng_mask.jpg"></a></span></div>
+        <div class="3u$"><span class="image fit"><a href="images/2.2/peng_blend.jpg"><img src="images/2.2/peng_blend.jpg"></a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <p><b>Final thoughts:</b> definitely, the most important thing we learned from implenting these functions is to read the source papers <u>very</u> closely. Many times we realized we misinterpreted the paper's instructions.<p>
+
+</section>
+
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+<p class="copyright">by <a href="http://jsluong.com">Joyce S. Luong</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+</footer>
+
+</div>
+
+<!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/skel.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<!--
+	Story by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Images of the Russian Empire</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="divided">
+
+				<!-- One -->
+					<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+						<div class="content">
+							<p class="major">
+
+							<h1>Images of the Russian Empire</h1>
+							<p class="major">Colorizing the Prokudin-Gorskii Photo Collection with Matrix Manipulation</p>
+
+							<p>Given the digitized glass plates from Prokudin-Gorskii's project to document Russia in color—each set containing a scene taken through a red, green, and blue filter—we attempt to algorithmically align and render each set into a color image.</p>
+
+							<p>To do this, we perform a number of matrix operations with NumPy and SciPy to generate the final image.</p>
+							<ul class="actions vertical">
+								<li><a href="#approach" class="button big wide smooth-scroll-middle">What was your approach?</a></li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/emir.jpg" alt="" />
+						</div>
+					</section>
+
+
+				<!-- Three -->
+					<section class="spotlight style1 orient-left content-align-right image-position-center onscroll-image-fade-in" id="approach">
+						<div class="content">
+							<h2>Approach</h2>
+							<p>
+
+							After taking the input image and splitting it into three channels, we went with an extremely distorted version of normalized cross-correlation (NCC): <u>taking the sum after multiplying two input channels element-wise</u> to generate a score for similarity (higher is better). <p>
+
+							For both the red and green channels, we calculated the similarity between displacements in the range <code>[-15, 15]</code> to align them to blue. We returned the alignment that gave the highest similarity.<p>
+
+							This naive algorithm worked well for the smaller images—they were processed instantaneously.
+
+							<ul class="actions vertical">
+								<li><a href="#pyramid" class="button big wide smooth-scroll-middle">What about bigger images?</a></li>
+							</ul>
+
+							</p>
+						</div>
+						<div class="image">
+							<img src="images/cathedral.jpg" alt="" />
+						</div>
+					</section>
+
+				<!-- Four -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="pyramid">
+						<div class="content">
+							<h2>Image Pyramid</h2>
+							<p>
+								Our naive algorithm had trouble processing the larger images quickly. So we employed an <a href=https://en.wikipedia.org/wiki/Pyramid_(image_processing)>image pyramid</a>. <p>
+
+								First, we recursed on the image, each level of the recursion sizing the input image down by 40% until it was reasonably small and increasing our search window size by 1.6.<p>
+
+								On the way up after hitting this base case, our algorithm returns the offset given by running our basic alignment algorithm to its caller. <p>
+
+								This reduced the runtime dramatically, as most of the heavy lifting was done on the smallest images--refinement was left to the largest one.
+
+							</p>
+							<ul class="actions vertical">
+								<li><a href="#issues" class="button big wide smooth-scroll-middle">Did you face any issues?</a></li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/melons.jpg" alt="" />
+						</div>
+					</section>
+
+				<!-- Three -->
+					<section class="spotlight style1 orient-left content-align-right image-position-center onscroll-image-fade-in" id="issues">
+						<div class="content">
+							<h2>Issues</h2>
+							<p>
+
+							Sometimes, alignment didn't work well because varying plate sizes left channels with dark borders that threw off our algorithm. To solve this, we simply ran the alignment on the middle third of each image on each level of the recursion within the image pyramid.<p>
+
+							For some images, even our image pyramid wasn't wasn't enough to align the channels properly. For example, <code>emir</code>'s robe appeared to be light in the blue/green channels, but dark in the red channel. This threw off our original algorithm as it relied on brightness values. <p>
+
+							For <code>vase</code>, the red channel's image contained a motion blur, which also threw off our algorithm.
+
+							<ul class="actions vertical">
+								<li><a href="#bells1" class="button big wide smooth-scroll-middle">How did you solve that?</a></li>
+							</ul>
+
+							</p>
+						</div>
+						<div class="image">
+							<img src="images/emir_misaligned.jpg" alt="" />
+						</div>
+					</section>
+
+
+				<!-- Five -->
+
+<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="bells1">
+						<div class="content">
+							<h2>Bells and Whistles: Edge Detection</h2>
+							<p>
+								We pre-processed <code>emir</code> and <code>vase</code> by running a <i>sobel filter</i> on them, which returns a black-and-white image that contains only the edges. Inputting these into our algorithm lets use use edges instead of brightness values for alignment. As a result, we found better alignments for both <code>emir</code> and <code>vase</code>. <p>
+
+								<table>
+								  <tr>
+								    <th><img src=./images/emir_misaligned.jpg width = 300></th>
+								    <th><img src=./images/emir_aligned.jpg width = 300></th>
+								  </tr>
+								</table>
+
+
+							</p>
+							<ul class="actions vertical">
+								<li><a href="#bells2" class="button big wide smooth-scroll-middle">What else did you try?</a></li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/sobel.jpg" alt="" />
+						</div>
+					</section>
+
+					<section class="spotlight style1 orient-left content-align-right image-position-center onscroll-image-fade-in" id="bells2">
+						<div class="content">
+							<h2>Bells and Whistles: Sharpening</h2>
+							<p>
+
+								To automatically sharpen images, I convoluted a "sharpen" <a href=https://en.wikipedia.org/wiki/Kernel_(image_processing)>kernel</a> onto each channel after alignment but before putting the channels together.<p>
+
+								Often the convolution would lead to values going outside the <code>[-1, 1]</code> range required for images as floats, so after convolution I would make sure to set all values below <code>-1</code> or above <code>1</code> to <code>-1</code> or <code>1</code> , respectively.<p>
+
+								The results are rather harsh on the smaller images, but wonderful on the larger ones.
+
+
+								<table>
+								  <tr>
+								    <th><img src=./images/emir_unsharpened.jpg width = 300></th>
+								    <th><img src=./images/emir_sharpened.jpg width = 300></th>
+								  </tr>
+								</table>
+
+							<ul class="actions vertical">
+								<li><a href="#bells3" class="button big wide smooth-scroll-middle">What else did you try?</a></li>
+							</ul>
+
+
+							</p>
+						</div>
+						<div class="image">
+							<img src="images/sharpen.jpg" alt="" />
+						</div>
+					</section>
+
+<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="bells3">
+						<div class="content">
+							<h2>Bells and Whistles: Contrast + Color Balance</h2>
+							<p>
+								After running our sharpening metrics on the image, we realized we didn't like how blue/red the images are. To simulaneously add color balance and contrast, we normalized each pixel value into range <code>[-1, 1]</code>. <p>
+
+								Strangely enough, contrasting by itself gives very bad color output, but contrasting after applying sharpening results in images that appear more balanced and slightly warmer.
+
+								<table>
+								  <tr>
+								    <th><img src=./images/workshop_nocontrast.jpg width = 300></th>
+								    <th><img src=./images/workshop_contrast.jpg width = 300></th>
+								  </tr>
+								</table>
+
+							</p>
+							<ul class="actions vertical">
+								<li><a href="#bells4" class="button big wide smooth-scroll-middle">What else did you try?</a></li>
+							</ul>
+
+
+						</div>
+						<div class="image">
+							<img src="images/contrast.jpg" alt="" />
+						</div>
+					</section>
+
+					<section class="spotlight style1 orient-left content-align-right image-position-center onscroll-image-fade-in" id="bells4">
+						<div class="content">
+							<h2>Bells and Whistles: Automatic Cropping</h2>
+							<p>
+
+								We used a <i>Probabilistic Hough Transform</i> to identify horizontal and vertical lines in the image that are within <code>margin</code> value of 6% of the edges. Then we cropped those edges off. Because the Hough Transform often returned many lines, sometimes our algorithm would select a line that would lead to over-aggresive cropping.<p>
+
+								To get around that, we played around with our input <code>margin</code> values. 10% was good for most images, but 6% worked best for not being overly-aggressive with <code>emir</code>.<p>
+
+								<table>
+								  <tr>
+								    <th><img src=./images/emir_uncropped.jpg width = 300></th>
+								    <th><img src=./images/emir.jpg width = 300></th>
+								  </tr>
+								</table>
+
+							<ul class="actions vertical">
+								<li><a href="#gallery" class="button big wide smooth-scroll-middle">View the final gallery</a></li>
+							</ul>
+
+							</p>
+						</div>
+						<div class="image">
+							<img src="images/crop.jpg" alt="" />
+						</div>
+					</section>
+
+					<section class="wrapper style1 align-center" id="gallery">
+						<div class="inner">
+							<h2>The Gallery</h2>
+							<p>Hover for final alignment values. Click to view full image.</p>
+						</div>
+
+						<!-- Gallery -->
+							<div class="gallery style2 medium lightbox onscroll-fade-in">
+								<article>
+									<a href="images/gallery/fulls/cathedral.jpg" class="image">
+										<img src="images/gallery/thumbs/cathedral.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Cathedral</h3>
+										<p><b>red:</b> (3, 12) <b>green:</b> (2, 5)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+
+								<article>
+									<a href="images/gallery/fulls/monastery.jpg" class="image">
+										<img src="images/gallery/thumbs/monastery.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Monastery</h3>
+										<p><b>red:</b> (2, 3) <b>green:</b> (2, -3)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/nativity.jpg" class="image">
+										<img src="images/gallery/thumbs/nativity.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Nativity</h3>
+										<p><b>red:</b> (0, 7) <b>green:</b> (1, 3)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/settlers.jpg" class="image">
+										<img src="images/gallery/thumbs/settlers.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Settlers</h3>
+										<p><b>red:</b> (-1, 14) <b>green:</b> (0, 7)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/icon.jpg" class="image">
+										<img src="images/gallery/thumbs/icon.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Icon</h3>
+										<p><b>red:</b> (23, 90) <b>green:</b> (18, 41)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/lady.jpg" class="image">
+										<img src="images/gallery/thumbs/lady.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Lady</h3>
+										<p><b>red:</b> (9, 104) <b>green:</b> (7, 42)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/harvesters.jpg" class="image">
+										<img src="images/gallery/thumbs/harvesters.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Harvesters</h3>
+										<p><b>red:</b> (15, 123) <b>green:</b> (18, 59)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/emir.jpg" class="image">
+										<img src="images/gallery/thumbs/emir.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Emir (with sobel)</h3>
+										<p><b>red:</b> (41, 107) <b>green:</b> (23, 49)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/self_portrait.jpg" class="image">
+										<img src="images/gallery/thumbs/self_portrait.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Self Portrait</h3>
+										<p><b>red:</b> (37, 174) <b>green:</b> (29, 77)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/turkmen.jpg" class="image">
+										<img src="images/gallery/thumbs/turkmen.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Turkmen</h3>
+										<p><b>red:</b> (29, 117) <b>green:</b> (22, 56)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/three_generations.jpg" class="image">
+										<img src="images/gallery/thumbs/three_generations.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Three Generations (with sobel)</h3>
+										<p><b>red:</b> (14, 109) <b>green:</b> (17, 50)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/village.jpg" class="image">
+										<img src="images/gallery/thumbs/village.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Village</h3>
+										<p><b>red:</b> (23, 136) <b>green:</b> (13, 64)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+
+								<article>
+									<a href="images/gallery/fulls/train.jpg" class="image">
+										<img src="images/gallery/thumbs/train.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Train</h3>
+										<p><b><b>red:</b> (32, 85) <b>green:</b> (6, 42)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+
+							</div>
+
+					</section>
+						<!-- Gallery -->
+							<div class="gallery style2 medium lightbox onscroll-fade-in">
+								<article>
+									<a href="images/gallery/fulls/workshop.jpg" class="image">
+										<img src="images/gallery/thumbs/workshop.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Workshop</h3>
+										<p><b>red:</b> (-12, 105) <b>green:</b> (0, 52)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/melons.jpg" class="image">
+										<img src="images/gallery/thumbs/melons.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Melons</h3>
+										<p><b>red:</b> (12, 178) <b>green:</b> (9, 83)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/onion_church.jpg" class="image">
+										<img src="images/gallery/thumbs/onion_church.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Onion Church</h3>
+										<p><b>red:</b> (37, 108) <b>green:</b> (26, 50)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+								<article>
+									<a href="images/gallery/fulls/vase.jpg" class="image">
+										<img src="images/gallery/thumbs/vase.jpg" alt="" />
+									</a>
+									<div class="caption">
+										<h3>Vase (with sobel)</h3>
+										<p><b>red:</b> (18, 90) <b>green:</b> (8, 12)</p>
+										<ul class="actions">
+											<li><span class="button small">Details</span></li>
+										</ul>
+									</div>
+								</article>
+							</div>
+					</section>
+
+
+				<!-- Footer -->
+					<footer class="wrapper style1 align-center">
+						<div class="inner">
+							<p>by Joyce S. Luong. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
